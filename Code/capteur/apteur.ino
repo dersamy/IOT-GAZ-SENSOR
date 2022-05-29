@@ -11,7 +11,7 @@ const char* password = "123456789";
 #define Threshold 12
 
 unsigned long currentMillis(0),lastMillis(0),lastMillis1(0);
-float analogReading(0);
+float analogReading(0),percent(0);
 bool threshold(0);
 bool isHIGH = false;
 
@@ -40,9 +40,10 @@ void loop() {
   
   if (currentMillis - lastMillis >= 500){
     analogReading = analogRead(ADC);
+    percent = analogReading * ( 100 / 1024 );
     threshold = digitalRead(Threshold);
 
-    ubidots.add("Gaz level", analogReading);// Change for your variable name  
+    ubidots.add("Gaz level", percent);// Change for your variable name  
     ubidots.add("threshold", threshold);
   
     bool bufferSent = false;
